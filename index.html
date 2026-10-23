@@ -1,0 +1,273 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sensory MCQs 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: one centered column. Loader card first, quiz and results cards swap in place. Dark look kept from the user's original page. */
+:root{
+  color-scheme:dark;
+  --bg:#0b1020;--bg-glow:#172746;
+  --panel:rgba(18,26,45,.96);--panel-2:#151f34;--panel-3:#17233a;
+  --line:#2b3955;--line-2:#34425e;
+  --text:#edf3ff;--muted:#aab8d0;--soft:#e1e8f3;
+  --accent:#7cafff;--accent-2:#b7d3ff;--accent-fill:#6fa5ff;--accent-ink:#08152b;
+  --good:#37c991;--good-bg:#10382f;--good-line:#237d61;--good-ink:#05251b;
+  --bad:#ff7c87;--bad-bg:#3c202b;--bad-line:#85434f;--bad-ink:#2c0c12;
+  --font:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(ellipse at top,var(--bg-glow) 0%,var(--bg) 55%) var(--bg);
+  color:var(--text);font:16px/1.5 var(--font);
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:24px 48px;
+}
+main{width:min(850px,100%);margin:0 auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px 16px;margin:4px 0 20px;flex-wrap:wrap}
+h1{font-size:clamp(1.25rem,3vw,1.8rem);margin:0;letter-spacing:-.03em;text-wrap:balance}
+h2{text-wrap:balance}
+.sub{color:var(--muted);font-size:.92rem;margin-top:4px}
+.head-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{border:1px solid var(--line);background:#121d32;border-radius:999px;padding:7px 12px;color:var(--accent-2);white-space:nowrap;font-size:.88rem}
+.progress-wrap{height:7px;background:#202c43;border-radius:99px;overflow:hidden;margin:0 0 20px}
+#progress{height:100%;width:0;background:linear-gradient(90deg,#5f9bff,#75d6c2);transition:width .2s}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:clamp(18px,4vw,30px);box-shadow:0 18px 50px #0002}
+.meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px;color:var(--muted);font-size:.9rem;flex-wrap:wrap}
+#question{font-size:clamp(1.15rem,3vw,1.48rem);font-weight:650;line-height:1.4;margin:0 0 22px;white-space:pre-wrap;overflow-wrap:anywhere}
+.options{display:grid;gap:11px}
+.option{width:100%;min-width:0;display:flex;align-items:flex-start;gap:13px;text-align:left;padding:14px 15px;border:1px solid var(--line-2);border-radius:13px;background:var(--panel-2);color:var(--text);font:inherit;cursor:pointer;transition:border-color .15s,background .15s,transform .1s}
+.option>span:last-child{min-width:0;overflow-wrap:anywhere}
+.option:hover:not(:disabled){border-color:var(--accent);background:#1a2944}
+.option:active:not(:disabled){transform:scale(.995)}
+.letter{flex:0 0 29px;height:29px;border:1px solid #465775;border-radius:8px;display:grid;place-items:center;color:var(--accent-2);font-weight:750;font-size:.9rem}
+.option.correct{background:var(--good-bg);border-color:var(--good)}
+.option.correct .letter{background:var(--good);border-color:var(--good);color:var(--good-ink)}
+.option.wrong{background:var(--bad-bg);border-color:var(--bad)}
+.option.wrong .letter{background:var(--bad);border-color:var(--bad);color:var(--bad-ink)}
+.option:disabled{cursor:default}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#feedback{margin-top:18px;border-radius:12px;padding:13px 15px}
+#feedback.good{background:var(--good-bg);border:1px solid var(--good-line)}
+#feedback.bad{background:var(--bad-bg);border:1px solid var(--bad-line)}
+.feedback-title{font-weight:750;margin-bottom:3px}
+.feedback-detail{color:var(--soft);overflow-wrap:anywhere}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:22px;flex-wrap:wrap}
+.left-controls,.right-controls{display:flex;gap:9px;flex-wrap:wrap}
+button.action{border:1px solid var(--line);background:#1a2740;color:var(--text);border-radius:11px;padding:10px 15px;font:600 .95rem var(--font);cursor:pointer}
+button.action:hover:not(:disabled){border-color:var(--accent)}
+button.action.primary{background:var(--accent-fill);color:var(--accent-ink);border-color:var(--accent-fill)}
+button.action.small{padding:7px 12px;font-size:.85rem}
+button.action:disabled{opacity:.35;cursor:not-allowed}
+.stats{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.9rem;margin-top:18px;font-variant-numeric:tabular-nums}
+.stats strong{color:var(--text)}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.statbox{padding:14px;background:var(--panel-3);border:1px solid var(--line);border-radius:13px;min-width:0}
+.statbox strong{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums}
+.statbox span{color:var(--muted);font-size:.85rem}
+.review-list{display:grid;gap:8px;margin-top:18px}
+.review-item{padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel-2);overflow-wrap:anywhere}
+.review-item .q{font-weight:650;margin-bottom:6px}
+.review-item .yours{color:var(--bad)}
+.review-item .right{color:var(--good)}
+.note{color:var(--muted);font-size:.82rem;text-align:center;margin-top:16px}
+
+/* loader */
+.drop{border:1.5px dashed #465775;border-radius:16px;padding:clamp(20px,5vw,34px);text-align:center;background:var(--panel-2);transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--accent);background:#1a2944}
+.drop p{margin:0 0 14px;color:var(--soft)}
+.drop .hint{color:var(--muted);font-size:.88rem;margin:12px 0 0}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.85rem;margin:20px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+textarea{width:100%;min-height:190px;resize:vertical;background:#0f172a;color:var(--text);border:1px solid var(--line-2);border-radius:12px;padding:12px 14px;font:.86rem/1.55 var(--mono)}
+textarea::placeholder{color:#6f7f9b}
+.format{margin-top:18px;border:1px solid var(--line);border-radius:12px;background:var(--panel-3);padding:12px 14px}
+.format summary{cursor:pointer;color:var(--accent-2);font-weight:600;font-size:.9rem}
+.format pre{margin:10px 0 0;font:.84rem/1.55 var(--mono);color:var(--soft);overflow-x:auto;white-space:pre}
+.format ul{margin:10px 0 0;padding-left:18px;color:var(--muted);font-size:.86rem}
+#loadMsg{margin-top:14px;font-size:.9rem;min-height:1.4em}
+#loadMsg.err{color:var(--bad)}
+#loadMsg.ok{color:var(--good)}
+@media(max-width:520px){
+  body{padding-block:15px 30px}
+  .card{border-radius:15px}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .pill{font-size:.78rem}
+  .controls{align-items:stretch}
+  .left-controls,.right-controls{width:100%}
+  .controls button{flex:1}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<main>
+<header>
+  <div><h1 id="appTitle">Sensory MCQs 3</h1><div class="sub" id="appSub">Questions 113–169 · answers revealed immediately</div></div>
+  <div class="head-right">
+    <div class="pill" id="topCount"></div>
+  </div>
+</header>
+
+<section class="card" id="quizWrap">
+  <div class="progress-wrap" aria-label="Progress"><div id="progress"></div></div>
+  <div class="meta"><span id="qNumber"></span><span id="answeredCount"></span></div>
+  <h2 id="question"></h2>
+  <div class="options" id="options"></div>
+  <div id="feedback" role="status" aria-live="polite" hidden></div>
+  <div class="controls">
+    <div class="left-controls">
+      <button class="action" id="prevBtn">← Previous</button>
+      <button class="action" id="skipBtn">Skip</button>
+    </div>
+    <div class="right-controls">
+      <button class="action primary" id="nextBtn">Next question →</button>
+      <button class="action primary" id="finishBtn" hidden>Finish</button>
+    </div>
+  </div>
+  <div class="stats"><span>Correct: <strong id="correctStat">0</strong></span><span>Incorrect: <strong id="wrongStat">0</strong></span><span>Unanswered: <strong id="unansweredStat">0</strong></span></div>
+</section>
+
+<section class="card" id="summary" hidden>
+  <h2 style="margin-top:0">Session complete</h2>
+  <p class="sub">Your results are ready. Review missed questions or restart the session.</p>
+  <div class="summary-grid">
+    <div class="statbox"><strong id="scoreValue">0%</strong><span>Score among answered</span></div>
+    <div class="statbox"><strong id="finalCorrect">0</strong><span>Correct</span></div>
+    <div class="statbox"><strong id="finalWrong">0</strong><span>Incorrect</span></div>
+  </div>
+  <div class="controls">
+    <div class="left-controls"><button class="action" id="backBtn">Back to questions</button></div>
+    <div class="right-controls">
+      <button class="action" id="reviewWrongBtn">Review incorrect answers</button>
+      <button class="action primary" id="restartBtn">Restart all questions</button>
+    </div>
+  </div>
+  <div class="review-list" id="reviewList"></div>
+</section>
+
+<div class="note" id="keyNote" hidden>Keyboard shortcuts: A–D or 1–4 to answer · ←/→ to navigate</div>
+</main>
+
+<script>
+var QUESTIONS=[{"number":113,"question":"What type of receptor best detects changes in stimulus intensity?","options":["Phasic receptor","Tonic receptor","Nociceptor","Chemoreceptor"],"answer":"A"},{"number":114,"question":"What happens in tonic receptors during sustained stimulus?","options":["Rapid adaptation","No response","Continuous discharge","Decreased RP"],"answer":"C"},{"number":115,"question":"A sensory neuron fails to generate action potential despite receptor activation. What is the likely cause?","options":["Weak receptor potential","Excess neurotransmitter","Increased Ca²⁺","Hyperpolarization of synapse"],"answer":"A"},{"number":116,"question":"Continuous pressure on skin leads to reduced sensation. What explains this?","options":["Summation","Facilitation","Adaptation","Sensitization"],"answer":"C"},{"number":117,"question":"A stimulus increases in intensity causing higher AP frequency. What explains this?","options":["All-or-none law","Frequency coding","Synaptic delay","Fatigue"],"answer":"B"},{"number":118,"question":"A receptor opens more ion channels with stronger stimulus. What property is demonstrated?","options":["Adaptation","Specificity","Graded response","Fatigue"],"answer":"C"},{"number":119,"question":"A receptor responds only to light stimulus. What property is this?","options":["Specificity","Adaptation","Excitability","Summation"],"answer":"A"},{"number":120,"question":"A patient has defective mechanoreceptors unable to convert pressure into electrical signals. Which function is impaired?","options":["Detection","Transduction","Transmission","Integration"],"answer":"B"},{"number":121,"question":"What type of sensations are mainly carried by the dorsal column pathway?","options":["Pain and temperature","Crude touch","Itch and tickle","Fine touch and proprioception"],"answer":"D"},{"number":122,"question":"Why is the spinothalamic tract considered polymodal?","options":["Carries only one sensation","Carries multiple types of sensations","Has one receptor type","Uses only one neuron"],"answer":"B"},{"number":123,"question":"What is the main difference between dorsal column and spinothalamic pathways?","options":["Both carry only pain","Dorsal column carries polymodal sensations","Spinothalamic carries pain and temperature","Dorsal column crosses immediately"],"answer":"C"},{"number":124,"question":"Which fibers conduct impulses in the dorsal column pathway?","options":["Aδ and C fibers","Aα and Aβ fibers","Only C fibers","Only Aδ fibers"],"answer":"B"},{"number":125,"question":"Where do first-order neurons of dorsal column synapse?","options":["Medulla","Posterior horn","Thalamus","Cortex"],"answer":"A"},{"number":126,"question":"When do dorsal column fibers cross to the opposite side?","options":["Immediately in spinal cord","At thalamus","In medulla","In cortex"],"answer":"C"},{"number":127,"question":"Where do spinothalamic fibers cross?","options":["In cortex","In medulla","In spinal cord","In cerebellum"],"answer":"C"},{"number":128,"question":"What is the main feature of spinothalamic tract?","options":["Ipsilateral ascent","Large fibers","Fine touch transmission","Immediate crossing"],"answer":"D"},{"number":129,"question":"A lesion affects posterior horn cells; what is impaired?","options":["First-order neuron","Second-order neuron","Third-order neuron","Fourth order neuron"],"answer":"B"},{"number":130,"question":"Which sensations are carried by the lateral spinothalamic tract?","options":["Pain and temperature","Fine touch","Vibration","Proprioception"],"answer":"A"},{"number":131,"question":"What is the role of the thalamus in sensory perception?","options":["Detailed localization","Storage of memory","Motor control","Crude awareness of sensation"],"answer":"D"},{"number":132,"question":"Where are fine sensory discriminations processed?","options":["Spinal cord","Brainstem","Thalamus","Cortex"],"answer":"D"},{"number":133,"question":"Which body part has the largest cortical representation?","options":["Back","Trunk","Thumb and lips","Viscera"],"answer":"C"},{"number":134,"question":"What is the main function of somatic sensory area I?","options":["Motor control","Sensory discrimination","Hormonal regulation","Reflex integration"],"answer":"B"},{"number":135,"question":"What is the role of somatic sensory area II?","options":["Fine localization","Reflex action","Motor planning","Integration from both sides"],"answer":"D"},{"number":136,"question":"What is the function of somatic association cortex?","options":["Basic sensation","Reflex arcs","Integration and interpretation","Neurotransmitter release"],"answer":"C"},{"number":137,"question":"A patient cannot identify objects by touch; what is impaired?","options":["Pain pathway","Stereognosis in SSI","Reflex arc","Motor cortex"],"answer":"B"},{"number":138,"question":"What determines the modality of sensation?","options":["Intensity","Frequency","Receptor type and pathway","Synaptic delay"],"answer":"C"},{"number":139,"question":"What determines the locality of sensation?","options":["Law of projection","Frequency coding","Muller's Law","Convergence theory"],"answer":"A"},{"number":140,"question":"What does Muller's law state?","options":["Stimulus determines sensation","Cortex determines sensation","Receptor determines sensation","Intensity determines sensation"],"answer":"C"},{"number":141,"question":"What is the labelled line principle?","options":["Random sensory pathways","Specific pathway for each sensation","Mixed pathways","No fixed pathways"],"answer":"B"},{"number":142,"question":"What mechanism explains why stimulation of the photoreceptors produces visual sensation regardless of stimulus type?","options":["Law of projection","Spatial summation","Receptor adaptation","Muller's law"],"answer":"D"},{"number":143,"question":"How is intensity of sensation encoded?","options":["Synaptic delay","Number of receptors and frequency of impulses","Type of receptor","Location of cortex"],"answer":"B"},{"number":144,"question":"What is the effect of receptor recruitment?","options":["Decreased sensation","Reduced AP frequency","Increased intensity perception","Loss of modality"],"answer":"C"},{"number":145,"question":"A lesion in dorsal column causes loss of vibration sense. Which pathway is affected?","options":["Dorsal column","Spinothalamic","Corticospinal","Vestibulo-spinal"],"answer":"A"},{"number":146,"question":"A patient loses pain and temperature sensation on left side of the body. Which tract is affected?","options":["Right Dorsal column","Left Spinothalamic","Left Dorsal column","Right Spinothalamic"],"answer":"D"},{"number":147,"question":"A lesion occurs in the medulla affecting crossing fibers. Which pathway is primarily involved?","options":["Spinothalamic","Dorsal column","Visual","Auditory"],"answer":"B"},{"number":148,"question":"A patient loses fine touch on the right side but retains pain sensation; which pathway is damaged?","options":["Right Spinothalamic tract","Left Dorsal column","Right Dorsal column","Left Spinothalamic tract"],"answer":"C"},{"number":149,"question":"A patient cannot localize touch precisely. Which area is affected?","options":["Thalamus","Somatic sensory cortex I","Brainstem","Spinal cord"],"answer":"B"},{"number":150,"question":"A patient feels crude touch on right side but not fine touch. Which tract is intact?","options":["Right Spinothalamic tract","Left Spinothalamic tract","Right Dorsal column","Left Dorsal column"],"answer":"B"},{"number":151,"question":"A patient cannot localize pain but feels it; lesion is in?","options":["Thalamus","Receptor","DRG","SSI"],"answer":"D"},{"number":152,"question":"A tumor compresses posterior horn neurons. Which sensation is first affected?","options":["Vibration","Proprioception","Fine touch","Pain"],"answer":"D"},{"number":153,"question":"A patient has intact sensation but no emotional response; which area affected?","options":["SSI","Limbic system","Thalamus","DRG"],"answer":"B"},{"number":154,"question":"A lesion interrupts crossing fibers of spinothalamic tract; what occurs?","options":["Ipsilateral loss of pain","No loss","Bilateral loss","Contralateral loss of pain"],"answer":"D"},{"number":155,"question":"Increased stimulus intensity leads to stronger sensation. What mechanism explains this?","options":["Adaptation","Synaptic delay","Recruitment and frequency coding","Habituation"],"answer":"C"},{"number":156,"question":"A patient perceives a stimulus in the wrong location. What principle explains this?","options":["Projection","Summation","Facilitation","Plasticity"],"answer":"A"},{"number":157,"question":"Damage to association cortex leads to inability to interpret sensory input. What function is lost?","options":["Integration","Transmission","Detection","Adaptation"],"answer":"A"},{"number":158,"question":"A patient has intact thalamus but damaged cortex. What is the expected finding?","options":["No sensation","Crude sensation without fine discrimination","Hyperesthesia","Complete anesthesia"],"answer":"B"},{"number":159,"question":"A lesion in thalamus results in what sensory deficit?","options":["No sensation at all","Loss of spinal motor reflexes","Loss of fine discrimination only","Loss of crude awareness"],"answer":"D"},{"number":160,"question":"What type of receptors are responsible for pain sensation?","options":["Encapsulated receptors","Pacinian corpuscles","Muscle spindles","Free nerve endings"],"answer":"D"},{"number":161,"question":"Which fibers mainly transmit fast pain?","options":["C fibers","Aδ fibers","Aβ fibers","Aα fibers"],"answer":"B"},{"number":162,"question":"Why is slow pain poorly localized?","options":["Diffuse central connections","Rapid conduction","Thick fibers","Direct cortical projection"],"answer":"A"},{"number":163,"question":"Which type of pain receptor responds to all types of stimuli?","options":["Mechanical","Thermal","Chemical","Polymodal"],"answer":"D"},{"number":164,"question":"Where are pain receptors most abundant?","options":["Deep tissues","Internal organs","Superficial skin","Brain tissue"],"answer":"C"},{"number":165,"question":"Which structure is insensitive to pain?","options":["Periosteum","Dura mater","Brain tissue","Arterial wall"],"answer":"C"},{"number":166,"question":"Why do nociceptors show little adaptation?","options":["Rapid fatigue","Continuous protection against injury","Lack of ion channels","Weak stimuli"],"answer":"B"},{"number":167,"question":"What is the ionic basis of pain transduction?","options":["Na+ and Ca2+ influx","Cl- influx","K+ efflux","Na+ efflux"],"answer":"A"},{"number":168,"question":"Which substance directly lowers pain threshold?","options":["Prostaglandins","Dopamine","Acetylcholine","GABA"],"answer":"A"},{"number":169,"question":"What is the DIRECT effect of NSAIDs on pain?","options":["Increase prostaglandins","Decrease prostaglandins","Increase Ca2+ influx in receptor","Decrease Ca2+ influx in receptor"],"answer":"B"}];
+var $=function(id){return document.getElementById(id);};
+var LETTERS=['A','B','C','D','E','F'];
+var index=0,responses=Array(QUESTIONS.length).fill(null),reviewMode=false,reviewIndices=[];
+function showQuiz(){
+  $('summary').hidden=true; $('quizWrap').hidden=false; $('keyNote').hidden=false;
+  render(); window.scrollTo(0,0);
+}
+function currentList(){ return reviewMode ? reviewIndices : QUESTIONS.map(function(_,i){return i;}); }
+function currentRealIndex(){ return currentList()[index]; }
+
+function stats(){
+  var answered=0, correct=0;
+  responses.forEach(function(v,i){ if(v!==null){ answered++; if(v===QUESTIONS[i].answer) correct++; } });
+  $('answeredCount').textContent = answered + ' answered';
+  $('correctStat').textContent = correct;
+  $('wrongStat').textContent = answered-correct;
+  $('unansweredStat').textContent = QUESTIONS.length-answered;
+  $('progress').style.width = (answered/QUESTIONS.length*100) + '%';
+  $('topCount').textContent = reviewMode ? 'Review · ' + reviewIndices.length : QUESTIONS.length + ' questions';
+}
+
+function render(){
+  var list=currentList();
+  if(index>=list.length){ showSummary(); return; }
+  var real=currentRealIndex(), q=QUESTIONS[real], selected=responses[real];
+  $('quizWrap').hidden=false; $('summary').hidden=true;
+  $('qNumber').textContent = reviewMode
+    ? 'Review ' + (index+1) + ' of ' + list.length + ' · Original Q' + q.number
+    : 'Question ' + (index+1) + ' of ' + QUESTIONS.length + ' · Q' + q.number;
+  $('question').textContent = q.question;
+  var box=$('options'); box.innerHTML='';
+  q.options.forEach(function(option,i){
+    var btn=document.createElement('button');
+    btn.className='option'; btn.type='button';
+    var letter=document.createElement('span'); letter.className='letter'; letter.textContent=LETTERS[i];
+    var text=document.createElement('span'); text.textContent=option;
+    btn.append(letter,text);
+    if(selected!==null){
+      btn.disabled=true;
+      if(LETTERS[i]===q.answer) btn.classList.add('correct');
+      if(LETTERS[i]===selected && selected!==q.answer) btn.classList.add('wrong');
+    } else btn.addEventListener('click',function(){ choose(LETTERS[i]); });
+    box.appendChild(btn);
+  });
+  var fb=$('feedback'); fb.className=''; fb.innerHTML='';
+  if(selected!==null){
+    var ok = selected===q.answer;
+    fb.hidden=false; fb.className = ok?'good':'bad';
+    var title=document.createElement('div'); title.className='feedback-title'; title.textContent = ok?'Correct!':'Not quite.';
+    var detail=document.createElement('div'); detail.className='feedback-detail';
+    detail.textContent = (ok?'Answer: ':'Correct answer: ') + q.answer + ' — ' + q.options[LETTERS.indexOf(q.answer)];
+    fb.append(title,detail);
+  } else fb.hidden=true;
+  var last = index===list.length-1;
+  $('prevBtn').disabled = index===0;
+  $('skipBtn').hidden = last; $('nextBtn').hidden = last; $('finishBtn').hidden = !last;
+  stats();
+}
+
+function choose(letter){
+  var real=currentRealIndex();
+  if(responses[real]!==null) return;
+  if(LETTERS.indexOf(letter) >= QUESTIONS[real].options.length) return;
+  responses[real]=letter; render();
+}
+
+function showSummary(){
+  $('quizWrap').hidden=true; $('summary').hidden=false;
+  var answered=0, correct=0, missed=[];
+  responses.forEach(function(v,i){
+    if(v!==null){ answered++; if(v===QUESTIONS[i].answer) correct++; else missed.push(i); }
+  });
+  var wrong=answered-correct;
+  $('scoreValue').textContent = answered ? Math.round(correct/answered*100)+'%' : '—';
+  $('finalCorrect').textContent = correct;
+  $('finalWrong').textContent = wrong;
+  $('reviewWrongBtn').disabled = wrong===0;
+  var rl=$('reviewList'); rl.innerHTML='';
+  if(wrong===0){ rl.textContent = answered ? 'No incorrect answers. Nice work.' : 'No answers yet.'; return; }
+  missed.forEach(function(i){
+    var q=QUESTIONS[i], r=responses[i];
+    var item=document.createElement('div'); item.className='review-item';
+    var t=document.createElement('div'); t.className='q'; t.textContent='Q'+q.number+'. '+q.question;
+    var y=document.createElement('div'); y.className='yours'; y.textContent='Your answer: '+r+' — '+q.options[LETTERS.indexOf(r)];
+    var c=document.createElement('div'); c.className='right'; c.textContent='Correct: '+q.answer+' — '+q.options[LETTERS.indexOf(q.answer)];
+    item.append(t,y,c); rl.appendChild(item);
+  });
+}
+
+function next(){ if(index<currentList().length-1){ index++; render(); } else showSummary(); }
+function previous(){ if(index>0){ index--; render(); } }
+function restart(){ index=0; responses=Array(QUESTIONS.length).fill(null); reviewMode=false; reviewIndices=[]; showQuiz(); }
+
+$('prevBtn').addEventListener('click',previous);
+$('skipBtn').addEventListener('click',next);
+$('nextBtn').addEventListener('click',next);
+$('finishBtn').addEventListener('click',showSummary);
+$('restartBtn').addEventListener('click',restart);
+$('backBtn').addEventListener('click',function(){ index=Math.min(index,currentList().length-1); showQuiz(); });
+$('reviewWrongBtn').addEventListener('click',function(){
+  reviewIndices = QUESTIONS.map(function(q,i){ return responses[i]!==null && responses[i]!==q.answer ? i : -1; }).filter(function(i){ return i>=0; });
+  if(!reviewIndices.length) return;
+  reviewMode=true; index=0; showQuiz();
+});
+
+document.addEventListener('keydown',function(e){
+  if($('quizWrap').hidden) return;
+  var tag=(e.target&&e.target.tagName)||'';
+  if(tag==='TEXTAREA'||tag==='INPUT'||e.ctrlKey||e.metaKey||e.altKey) return;
+  var key=e.key.toUpperCase();
+  if(['A','B','C','D','E','F'].indexOf(key)>-1) choose(key);
+  else if(['1','2','3','4','5','6'].indexOf(key)>-1) choose(LETTERS[Number(key)-1]);
+  else if(e.key==='ArrowRight') next();
+  else if(e.key==='ArrowLeft') previous();
+});
+
+showQuiz();
+</script>
+
+</body></html>
